@@ -1,0 +1,31 @@
+mat-card {
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  max-height: 300px;
+  text-align: center;
+  background-color: cadetblue;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.card-wrapper {
+  background-color: cyan;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+mat-form-field {
+  display: flex;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: cyan;
+  color: cadetblue;
+  font-family: "Times New Roman", Times, serif;
+}
