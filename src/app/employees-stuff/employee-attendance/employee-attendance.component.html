@@ -1,0 +1,25 @@
+<app-nav-bar></app-nav-bar>
+<h1>Prezenta angajatului {{ employee | fullname }}</h1>
+<mat-form-field class="filter">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" #input />
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <div *ngFor="let column of displayedColumns">
+      <ng-container matColumnDef="{{ column }}">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
+        <td mat-cell *matCellDef="let employee">
+          {{ employee.column }}
+        </td>
+      </ng-container>
+    </div>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page of employees"
+    ></mat-paginator>
+  </table>
+  <router-outlet></router-outlet>
+</div>
