@@ -1,0 +1,55 @@
+<div class="navbar">
+  <div class="brand">
+    <img
+      src="./././assets/images/logo_preview_rev_1.jpg"
+      alt="logo"
+      style="display: inline-flex"
+    />
+    <div style="display: inline-flex">
+      <strong style="color: whitesmoke; padding: 0px"> Accessify </strong>
+      <p style="color: whitesmoke; font-size: 15px; padding: 0px">V 1.0.0</p>
+    </div>
+  </div>
+  <a
+    class="link"
+    routerLink=""
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >Home</a
+  >
+  <a
+    class="link"
+    routerLink="/employees"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >Employees</a
+  >
+  <div class="menu d-none d-lg-block text-white justify-content-end">
+    <div class="dropdown">
+      <button
+        mat-stroked-button
+        class="dropdown-toggle"
+        type="button"
+        id="dropdownMenuUser"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <i class="fa fa-user-o"></i>{{ loggedUser | fullname }}
+      </button>
+      <div
+        class="dropdown-menu dropdown-menu-right"
+        aria-labelledBy="dropdownMenuUser"
+      >
+        <button
+          id="dropdownLogoutButton"
+          class="dropdown-item"
+          type="button"
+          (click)="logout()"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

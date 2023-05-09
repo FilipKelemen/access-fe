@@ -1,0 +1,29 @@
+.navbar {
+  background-color: aqua;
+  padding: 30px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-family: "Times New Roman", Times, serif;
+  gap: 10px;
+  max-height: 30px;
+
+  .link {
+    color: whitesmoke;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bolder;
+    &:hover {
+      border-bottom: 3px solid white;
+    }
+    &.active {
+      border-bottom: 3px solid white;
+    }
+  }
+}
+
+.menu {
+  background-color: aqua;
+  box-shadow: 1px 1px whitesmoke;
+  border: inset;
+}
