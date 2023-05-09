@@ -1,0 +1,110 @@
+<div class="form">
+  <h1>Create User</h1>
+  <form [formGroup]="createUser">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Email"
+        formControlName="email"
+        name="email"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        placeholder="Enter your password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="First Name"
+        formControlName="firstName"
+        name="firstName"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Last Name"
+        formControlName="lastName"
+        name="lastName"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="CNP"
+        formControlName="CNP"
+        name="CNP"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Badge number"
+        formControlName="badge"
+        name="badge"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Department"
+        formControlName="department"
+        name="department"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Access interval"
+        formControlName="accessInterval"
+        name="accessInterval"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="IMEI"
+        formControlName="IMEI"
+        name="IMEI"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Creator"
+        formControlName="createdByAuthorisedUser"
+        name="createdByAuthorisedUser"
+        required
+      />
+    </mat-form-field>
+  </form>
+  <button class="cta" (click)="Save()">
+    <span> Save</span>
+    <svg viewBox="0 0 13 10" height="10px" width="15px">
+      <path d="M1,5 L11,5"></path>
+      <polyline points="8 1 12 5 8 9"></polyline>
+    </svg>
+  </button>
+</div>
+<router-outlet></router-outlet>
