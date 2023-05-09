@@ -1,0 +1,96 @@
+<app-nav-bar></app-nav-bar>
+<mat-form-field class="filter">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" #input />
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nume</th>
+      <td mat-cell *matCellDef="let employee">
+        {{ employee | fullname }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="photo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Photo</th>
+      <td mat-cell *matCellDef="let employee">
+        <img src="{{ employee.photo }}" />
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="CNP">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>CNP</th>
+      <td mat-cell *matCellDef="let employee">{{ employee.CNP }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="badge">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Badge</th>
+      <td mat-cell *matCellDef="let employee">
+        {{ employee.badge }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="division">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Division</th>
+      <td mat-cell *matCellDef="let employee">
+        {{ employee.department }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="access_interval">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Access interval</th>
+      <td mat-cell *matCellDef="let employee">
+        {{ employee.accessInterval }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="IMEI">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>IMEI</th>
+      <td mat-cell *matCellDef="let employee">
+        {{ employee.IMEI }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="access">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Access</th>
+      <td mat-cell *matCellDef="let employee">
+        {{ employee.access }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="accepter">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>CNP accepter</th>
+      <td mat-cell *matCellDef="let employee">
+        {{ employee.createdByAuthorizedUser }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created at</th>
+      <td mat-cell *matCellDef="let employee">
+        {{ employee.date | date }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let employee; columns: displayedColumns"
+      (click)="onClickRow(employee)"
+    ></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        No data matching the filter "{{ input.value }}"
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page of employees"
+  ></mat-paginator>
+  <router-outlet></router-outlet>
+</div>
