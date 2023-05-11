@@ -25,7 +25,16 @@ export class AuthorisedUserService {
       ])
     if(error) throw error
   }
+  async getOne(email: string) {
 
+    let { data: AuthorisedUser, error } = await this.supabaseService.supabase
+      .from('AuthorisedUser')
+      .select("*")
+
+      // Filters
+      .eq('Email', email)
+
+  }
   async update(putDTO: Database['public']['Tables']['AuthorisedUser']['Update'], email: string) {
 
     const { data, error } = await this.supabaseService.supabase
