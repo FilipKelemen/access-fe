@@ -5,15 +5,15 @@ import {
   createClient,
   Session,
   SupabaseClient,
-  User,
 } from '@supabase/supabase-js';
 import { environment } from 'src/environments/environment';
+import {Database} from '../models/supabase'
 
 @Injectable({
   providedIn: 'root',
 })
 export class SupabaseService {
-  public supabase: SupabaseClient;
+  public supabase: SupabaseClient<Database>;
   _session: AuthSession | null = null;
 
   constructor() {
