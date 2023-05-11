@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { SupabaseService } from 'src/app/services/supabase.service';
+import { Database } from 'src/app/models/supabase';
+import { isPostgressError } from 'src/app/models/utils';
+import { AttendanceService } from 'src/app/services/attendance.service';
+import { EmployeesService } from 'src/app/services/employees.service';
 
 @Component({
   selector: 'app-employee-attendance',
@@ -9,43 +12,28 @@ import { SupabaseService } from 'src/app/services/supabase.service';
   styleUrls: ['./employee-attendance.component.scss'],
 })
 export class EmployeeAttendanceComponent implements OnInit {
-  loggedUser: any;
-  record: any;
-  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
-  employee: any;
-  displayedColumns = ['IMEI', 'tip_acces', 'data'];
+  employees: Database['public']['Tables']['Employee']['Row'][];
+  dataSource: MatTableDataSource<
+    Database['public']['Tables']['Access']['Row']
+  > = new MatTableDataSource<Database['public']['Tables']['Access']['Row']>();
+  displayedColumns = ['IMEI', 'type', 'created_at'];
   constructor(
-    private supabaseService: SupabaseService,
-    private route: ActivatedRoute
+    private employeesService: EmployeesService,
+    private route: ActivatedRoute,
+    private attendanceService: AttendanceService
   ) {}
   ngOnInit(): void {
     const IMEI = this.route.snapshot.paramMap.get('IMEI');
-    this.supabaseService
-      .getLoggedUser()
-      .then((data) => (this.loggedUser = data));
-
-    const userRecord = async () => {
-      const { data, error } = await this.supabaseService.supabase
-        .from('Access')
-        .select()
-        .eq('IMEI', this.loggedUser.IMEI);
-      if (error) return error;
-      return data;
-    };
-    userRecord().then((data) => {
-      this.record = data;
-      this.dataSource.data = this.record;
+    if (!IMEI) return;
+    this.employeesService.getEmployee(IMEI).then((data) => {
+      if (isPostgressError(data)) throw data;
+      this.employees = data || [];
     });
 
-    const getEmployee = async () => {
-      const { data, error } = await this.supabaseService.supabase
-        .from('Employee')
-        .select()
-        .eq('IMEI', IMEI);
-      if (error) return error;
-      return data;
-    };
-    getEmployee().then((data) => (this.employee = data));
+    this.attendanceService.getAttendance(IMEI).then((data) => {
+      if (isPostgressError(data)) throw data;
+      this.dataSource.data = data || [];
+    });
   }
 
   applyFilter(event: Event) {
