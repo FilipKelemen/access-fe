@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 
-const routes: Routes = [{ path: '', component: AppComponent }];
+const routes: Routes = [
+  { path: '', redirectTo: '/employees', pathMatch: 'full' },
+];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forRoot(routes)],
