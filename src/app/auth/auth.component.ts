@@ -33,19 +33,6 @@ export class AuthComponent implements OnInit {
           email: this.loginForm.value.email,
           password: this.loginForm.value.password,
         });
-      const getUserAutorizat = async () => {
-        const { data, error } = await this.supabaseService.supabase
-          .from('Authorised_user')
-          .select()
-          .eq('E-mail', this.loginForm.value.email);
-        if (error) return error;
-        return data;
-      };
-      getUserAutorizat().then((data) => {
-        this.user = data;
-        localStorage.setItem('user', this.user);
-      });
-
       if (error) throw error;
     } catch (error) {
       if (error instanceof Error) {
