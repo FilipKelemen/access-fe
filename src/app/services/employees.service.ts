@@ -7,12 +7,12 @@ export interface Employee {
   CNP: string;
   photo: string;
   badge: string;
-  department: string;
+  division: string;
   accessInterval: string;
   IMEI: string;
   access: boolean;
   createdByAuthorisedUser: string;
-  date: Date;
+  data: Date;
 }
 
 @Injectable({

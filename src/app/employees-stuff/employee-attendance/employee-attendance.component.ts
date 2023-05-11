@@ -26,7 +26,7 @@ export class EmployeeAttendanceComponent implements OnInit {
 
     const userRecord = async () => {
       const { data, error } = await this.supabaseService.supabase
-        .from('Prezenta')
+        .from('Access')
         .select()
         .eq('IMEI', this.loggedUser.IMEI);
       if (error) return error;
@@ -39,7 +39,7 @@ export class EmployeeAttendanceComponent implements OnInit {
 
     const getEmployee = async () => {
       const { data, error } = await this.supabaseService.supabase
-        .from('Angajat')
+        .from('Employee')
         .select()
         .eq('IMEI', IMEI);
       if (error) return error;
