@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { Employee } from 'src/app/services/employees.service';
+import { EmployeesService } from 'src/app/services/employees.service';
 import { SupabaseService } from 'src/app/services/supabase.service';
+import { Database } from 'src/app/models/supabase';
+import { isPostgressError } from 'src/app/models/utils';
 
 @Component({
   selector: 'app-employees',
@@ -13,7 +15,9 @@ import { SupabaseService } from 'src/app/services/supabase.service';
 export class EmployeesComponent implements OnInit {
   employees: any;
   expandedEmployee: any;
-  dataSource: MatTableDataSource<Employee> = new MatTableDataSource<Employee>();
+  dataSource: MatTableDataSource<
+    Database['public']['Tables']['Employee']['Row']
+  > = new MatTableDataSource<Database['public']['Tables']['Employee']['Row']>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns = [
@@ -29,19 +33,12 @@ export class EmployeesComponent implements OnInit {
     'photo',
   ];
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(private employeesService: EmployeesService) {}
 
   ngOnInit() {
-    const getEmployees = async () => {
-      const { data, error } = await this.supabaseService.supabase
-        .from('Employee')
-        .select();
-      if (error) return error;
-      return data;
-    };
-    getEmployees().then((data) => {
-      this.employees = data;
-      this.dataSource.data = this.employees;
+    this.employeesService.getEmployees().then((data) => {
+      if (isPostgressError(data)) throw data;
+      this.dataSource.data = data || [];
     });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -56,7 +53,7 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
-  onClickRow(employee: Employee) {
-    location.href = '/attendance/' + employee.IMEI;
+  onClickRow(employee: Database['public']['Tables']['Employee']) {
+    location.href = '/attendance/' + employee.Row.IMEI;
   }
 }
