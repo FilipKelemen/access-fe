@@ -5,21 +5,21 @@ import {Database} from '../models/supabase'
 @Injectable({
   providedIn: 'root'
 })
-export class AuthorisedUserService {
+export class RoleService {
 
   constructor(private supabaseService: SupabaseService) { }
 
   async getAll () {
-    let { data: AuthorisedUser, error } = await this.supabaseService.supabase
-      .from('AuthorisedUser')
+    let { data: Role, error } = await this.supabaseService.supabase
+      .from('Role')
       .select('*')
     if(error) throw error
-    return AuthorisedUser
+    return Role
   }
 
-  async post(postDTO: Database['public']['Tables']['AuthorisedUser']['Insert']) {
+  async post(postDTO: Database['public']['Tables']['Role']['Insert']) {
     const { data: Response, error } = await this.supabaseService.supabase
-      .from('AuthorisedUser')
+      .from('Role')
       .insert([
         postDTO,
       ])
@@ -27,29 +27,26 @@ export class AuthorisedUserService {
   }
   async getOne(email: string) {
 
-    let { data: AuthorisedUser, error } = await this.supabaseService.supabase
-      .from('AuthorisedUser')
+    let { data: Role, error } = await this.supabaseService.supabase
+      .from('Role')
       .select("*")
 
       // Filters
       .eq('Email', email)
 
   }
-  async update(putDTO: Database['public']['Tables']['AuthorisedUser']['Update'], email: string) {
+  async update(putDTO: Database['public']['Tables']['Role']['Update'], email: string) {
 
     const { data, error } = await this.supabaseService.supabase
-      .from('AuthorisedUser')
+      .from('Role')
       .update(putDTO)
       .eq('Email', email)
-
   }
 
   async delete(email: string) {
     const { data, error } = await this.supabaseService.supabase
-      .from('AuthorisedUser')
+      .from('Role')
       .delete()
       .eq('Email', email)
-
   }
 }
-
