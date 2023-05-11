@@ -3,7 +3,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { EmployeesService } from 'src/app/services/employees.service';
-import { SupabaseService } from 'src/app/services/supabase.service';
 import { Database } from 'src/app/models/supabase';
 import { isPostgressError } from 'src/app/models/utils';
 
@@ -14,7 +13,7 @@ import { isPostgressError } from 'src/app/models/utils';
 })
 export class EmployeesComponent implements OnInit {
   employees: any;
-  expandedEmployee: any;
+  employee: any;
   dataSource: MatTableDataSource<
     Database['public']['Tables']['Employee']['Row']
   > = new MatTableDataSource<Database['public']['Tables']['Employee']['Row']>();
@@ -28,7 +27,7 @@ export class EmployeesComponent implements OnInit {
     'access_interval',
     'IMEI',
     'access',
-    'accepter',
+    'authorisedUser',
     'created_at',
     'photo',
   ];
@@ -53,7 +52,7 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
-  onClickRow(employee: Database['public']['Tables']['Employee']) {
-    location.href = '/attendance/' + employee.Row.IMEI;
+  onClickRow(employee: Database['public']['Tables']['Employee']['Row']) {
+    location.href = '/attendance/' + employee.IMEI;
   }
 }
