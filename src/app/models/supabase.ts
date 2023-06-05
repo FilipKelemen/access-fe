@@ -29,25 +29,10 @@ export interface Database {
           type?: boolean | null
         }
       }
-      AuthorisedUser: {
-        Row: {
-          Email: string
-          role: number | null
-        }
-        Insert: {
-          Email: string
-          role?: number | null
-        }
-        Update: {
-          Email?: string
-          role?: number | null
-        }
-      }
       Employee: {
         Row: {
           access: boolean | null
           accessInterval: string | null
-          authorisedUser: string | null
           badge: string
           CNP: string
           createdByAuthorisedUser: string | null
@@ -62,7 +47,6 @@ export interface Database {
         Insert: {
           access?: boolean | null
           accessInterval?: string | null
-          authorisedUser?: string | null
           badge: string
           CNP: string
           createdByAuthorisedUser?: string | null
@@ -77,7 +61,6 @@ export interface Database {
         Update: {
           access?: boolean | null
           accessInterval?: string | null
-          authorisedUser?: string | null
           badge?: string
           CNP?: string
           createdByAuthorisedUser?: string | null

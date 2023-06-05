@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Database } from '../models/supabase';
+import {LocalDbService} from './local-db.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeesService {
   loggedUser: any;
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    private localDbService: LocalDbService
+  ) {}
 
   async getPrezenta(IMEI: string) {
     const { data, error } = await this.supabaseService.supabase
@@ -24,6 +28,7 @@ export class EmployeesService {
       .select('*')
       .range(0, 9);
     if (error) return error;
+    await this.localDbService.cacheEmployees(Employee)
     return Employee;
   }
 
