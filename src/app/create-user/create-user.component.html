@@ -90,13 +90,21 @@
       />
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        placeholder="Creator"
-        formControlName="createdByAuthorisedUser"
-        name="createdByAuthorisedUser"
-        required
-      />
+      <mat-select [(ngModel)]="selectedRole" name="role">
+        <mat-option *ngFor="let role of roles" [value]="role.id">
+          {{ role.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [(ngModel)]="selectedUser" name="authorizedUser">
+        <mat-option
+          *ngFor="let authorizedUser of authorizedUsers"
+          [value]="authorizedUser.CNP"
+        >
+          {{ authorizedUser | fullname }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </form>
   <button class="cta" (click)="Save()">
