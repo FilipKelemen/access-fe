@@ -24,6 +24,8 @@ import { EmployeesComponent } from './employees-stuff/employees/employees.compon
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { CreateUserRoutingModule } from './create-user/create-user-routing.module';
+import {LocalDbService} from './services/local-db.service'
+import {OfflinePopUpComponent} from './components/offline-pop-up/offline-pop-up.component'
 
 @NgModule({
   declarations: [
@@ -54,9 +56,16 @@ import { CreateUserRoutingModule } from './create-user/create-user-routing.modul
     MatPaginatorModule,
     MatToolbarModule,
     CreateUserRoutingModule,
+    OfflinePopUpComponent,
   ],
   exports: [],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  //inits db
+  constructor(
+    private localDbService: LocalDbService
+  ) {
+  }
+}

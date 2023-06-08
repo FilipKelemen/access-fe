@@ -1,2 +1,3 @@
 <app-nav-bar></app-nav-bar>
+<app-offline-pop-up *ngIf="!(onlineStatusService.isOnline$ | async)"></app-offline-pop-up>
 <router-outlet></router-outlet>
