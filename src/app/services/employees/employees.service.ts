@@ -1,33 +1,25 @@
 import { Injectable } from '@angular/core';
-import { SupabaseService } from './supabase.service';
-import { Database } from '../models/supabase';
-import {LocalDbService} from './local-db.service'
+import { SupabaseService } from '../supabase.service';
+import { Database } from '../../models/supabase';
+import {LocalDbService} from '../local-db.service'
+import {AbstractEmployeeService} from './abstract-employee.service'
 
 @Injectable({
   providedIn: 'root',
 })
-export class EmployeesService {
+export class EmployeesService implements AbstractEmployeeService{
   loggedUser: any;
   constructor(
     private supabaseService: SupabaseService,
     private localDbService: LocalDbService
   ) {}
 
-  async getPrezenta(IMEI: string) {
-    const { data, error } = await this.supabaseService.supabase
-      .from('Prezenta')
-      .select()
-      .eq('IMEI', IMEI);
-    if (error) return error;
-    return data;
-  }
-
   async getEmployees() {
     let { data: Employee, error } = await this.supabaseService.supabase
       .from('Employee')
       .select('*')
       .range(0, 9);
-    if (error) return error;
+    if (error) throw error;
     await this.localDbService.cacheEmployees(Employee)
     return Employee;
   }

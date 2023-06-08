@@ -35,6 +35,10 @@ export class LocalDbService {
     }
   }
 
+  async getEmployees() {
+    return this.database.getAll('Employee')
+  }
+
 }
 
 

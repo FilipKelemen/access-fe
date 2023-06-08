@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Database } from 'src/app/models/supabase';
 import { isPostgressError } from 'src/app/models/utils';
 import { AttendanceService } from 'src/app/services/attendance.service';
-import { EmployeesService } from 'src/app/services/employees.service';
+import { EmployeesService } from 'src/app/services/employees/employees.service';
 
 @Component({
   selector: 'app-employee-attendance',
