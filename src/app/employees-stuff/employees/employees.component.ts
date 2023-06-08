@@ -12,8 +12,6 @@ import { isPostgressError } from 'src/app/models/utils';
   styleUrls: ['./employees.component.scss'],
 })
 export class EmployeesComponent implements OnInit {
-  employees: any;
-  employee: any;
   dataSource: MatTableDataSource<
     Database['public']['Tables']['Employee']['Row']
   > = new MatTableDataSource<Database['public']['Tables']['Employee']['Row']>();
