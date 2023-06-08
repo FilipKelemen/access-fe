@@ -79,6 +79,8 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr
+          [style.pointer-events]="(onlineStatusService.isOnline$ | async) ? 'auto' : 'none'"
+          [style.cursor]="(onlineStatusService.isOnline$ | async) ? 'pointer' : 'auto'"
           mat-row
           *matRowDef="let employee; columns: displayedColumns"
           (click)="onClickRow(employee)"

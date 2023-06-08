@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Database } from 'src/app/models/supabase';
 import {EmployeeDataService} from '../../services/employees/employee-data.service'
 import {BehaviorSubject, map} from 'rxjs'
+import {OnlineStatusService} from '../../services/online-status.service'
 
 @Component({
   selector: 'app-employees',
@@ -32,7 +33,8 @@ export class EmployeesComponent implements OnInit {
   ];
 
   constructor(
-    private employeeDataService: EmployeeDataService
+    private employeeDataService: EmployeeDataService,
+    public onlineStatusService: OnlineStatusService
   ) {}
 
   ngOnInit() {
