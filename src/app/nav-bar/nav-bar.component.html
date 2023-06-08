@@ -1,14 +1,19 @@
-<div class="navbar">
+<mat-toolbar>
   <div class="brand">
     <img
       src="./././assets/images/logo_preview_rev_1.jpg"
       alt="logo"
-      style="display: inline-flex"
+      style="
+        display: inline-flex;
+        max-height: fit-content;
+        max-width: 100px;
+        object-fit: cover;
+      "
     />
-    <div style="display: inline-flex">
-      <strong style="color: whitesmoke; padding: 0px"> Accessify </strong>
-      <p style="color: whitesmoke; font-size: 15px; padding: 0px">V 1.0.0</p>
-    </div>
+  </div>
+  <div style="display: flex; flex-direction: column">
+    <strong style="color: black; padding: 0px"> Accessify </strong>
+    <p style="color: black; font-size: 15px; padding: 0px">V 1.0.0</p>
   </div>
   <a
     class="link"
@@ -52,4 +57,4 @@
       </div>
     </div>
   </div>
-</div>
+</mat-toolbar>
