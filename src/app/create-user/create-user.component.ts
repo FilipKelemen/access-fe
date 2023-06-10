@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SupabaseService } from '../services/supabase.service';
-import { EmployeesService } from '../services/employees.service';
 import { Database } from '../models/supabase';
 import { isPostgressError } from '../models/utils';
 import { RoleService } from '../services/role.service';
+import { EmployeesService } from '../services/employees/employees.service';
 
 @Component({
   selector: 'app-create-user',

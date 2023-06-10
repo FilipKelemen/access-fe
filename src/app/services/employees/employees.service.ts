@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from '../supabase.service';
 import { Database } from '../../models/supabase';
-import {LocalDbService} from '../local-db.service'
-import {AbstractEmployeeService} from './abstract-employee.service'
+import { LocalDbService } from '../local-db.service';
+import { AbstractEmployeeService } from './abstract-employee.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EmployeesService implements AbstractEmployeeService{
+export class EmployeesService implements AbstractEmployeeService {
   loggedUser: any;
   constructor(
     private supabaseService: SupabaseService,
@@ -20,7 +20,7 @@ export class EmployeesService implements AbstractEmployeeService{
       .select('*')
       .range(0, 9);
     if (error) throw error;
-    await this.localDbService.cacheEmployees(Employee)
+    await this.localDbService.cacheEmployees(Employee);
     return Employee;
   }
 
@@ -30,6 +30,15 @@ export class EmployeesService implements AbstractEmployeeService{
       .select('*')
       .eq('IMEI', IMEI);
     if (error) return error;
+    return Employee;
+  }
+
+  async getAuthorizedUsers() {
+    let { data: Employee, error } = await this.supabaseService.supabase
+      .from('Employee')
+      .select('*')
+      .eq('role', 2);
+    if (error) throw error;
     return Employee;
   }
 

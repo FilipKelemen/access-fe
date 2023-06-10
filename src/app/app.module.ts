@@ -22,10 +22,10 @@ import { EmployeesRoutingModule } from './employees-stuff/employees-routing.modu
 import { EmployeeAttendanceComponent } from './employees-stuff/employee-attendance/employee-attendance.component';
 import { EmployeesComponent } from './employees-stuff/employees/employees.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { CreateUserComponent } from './create-user/create-user.component';
 import { CreateUserRoutingModule } from './create-user/create-user-routing.module';
-import {LocalDbService} from './services/local-db.service'
-import {OfflinePopUpComponent} from './components/offline-pop-up/offline-pop-up.component'
+import { LocalDbService } from './services/local-db.service';
+import { OfflinePopUpComponent } from './components/offline-pop-up/offline-pop-up.component';
+import { CreateUserComponent } from './create-user/create-user.component';
 
 @NgModule({
   declarations: [
@@ -64,8 +64,5 @@ import {OfflinePopUpComponent} from './components/offline-pop-up/offline-pop-up.
 })
 export class AppModule {
   //inits db
-  constructor(
-    private localDbService: LocalDbService
-  ) {
-  }
+  constructor(private localDbService: LocalDbService) {}
 }
