@@ -92,9 +92,9 @@ export class EmployeesService implements AbstractEmployeeService {
   async savePhoto(photoFile: any) {
     const { error } = await this.supabaseService.supabase.storage
       .from('photos')
-      .upload(photoFile[0].name, photoFile.content!.buffer, {
+      .upload(photoFile[0].name, photoFile[0], {
         cacheControl: '3600',
-        contentType: photoFile[0].contentType,
+        contentType: photoFile[0].type,
         upsert: false,
       });
     if (error) throw error;

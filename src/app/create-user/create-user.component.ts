@@ -1,10 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { SupabaseService } from '../services/supabase.service';
 import { Database } from '../models/supabase';
 import { isPostgressError } from '../models/utils';
 import { RoleService } from '../services/role.service';
 import { EmployeesService } from '../services/employees/employees.service';
+
+const defaultValues = {
+  email: new FormControl(''),
+  password: new FormControl(''),
+  firstName: new FormControl(''),
+  lastName: new FormControl(''),
+  CNP: new FormControl(''),
+  photo: new FormControl(''),
+  badge: new FormControl(''),
+  division: new FormControl(''),
+  accessInterval: new FormControl(''),
+  IMEI: new FormControl(''),
+  role: new FormControl(''),
+  createdByAuthorisedUser: new FormControl(''),
+} as const
 
 @Component({
   selector: 'app-create-user',
@@ -12,7 +27,7 @@ import { EmployeesService } from '../services/employees/employees.service';
   styleUrls: ['./create-user.component.scss'],
 })
 export class CreateUserComponent implements OnInit {
-  createUser: FormGroup;
+  createUser!: FormGroup<typeof defaultValues>;
   hide = true;
   selectedRole: number;
   selectedUser: string;
@@ -26,20 +41,7 @@ export class CreateUserComponent implements OnInit {
     private roleService: RoleService
   ) {}
   ngOnInit(): void {
-    this.createUser = this.formBuilder.group({
-      email: [''],
-      password: [''],
-      firstName: [''],
-      lastName: [''],
-      CNP: [''],
-      photo: [''],
-      badge: [''],
-      division: [''],
-      accessInterval: [''],
-      IMEI: [''],
-      role: [''],
-      createdByAuthorisedUser: [''],
-    });
+    this.createUser = new FormGroup<typeof defaultValues>(defaultValues);
     this.createUser.markAllAsTouched();
     this.roleService.getAll().then((data) => {
       if (isPostgressError(data)) throw data;
@@ -52,17 +54,16 @@ export class CreateUserComponent implements OnInit {
   }
 
   async Save() {
+    let employee =
+      this.createUser.value;
+    const { data, error } =
+      await this.supabaseService.supabase.auth.admin.createUser({
+        email: this.createUser.value.email ?? '',
+        email_confirm: true,
+      });
+    if (error) return;
     await this.employeesService.savePhoto(this.selectedFiles);
-    // let employee: Database['public']['Tables']['Employee']['Row'] =
-    //   this.createUser.value;
-    // const { data, error } =
-    //   await this.supabaseService.supabase.auth.admin.createUser({
-    //     email: this.createUser.value.email,
-    //     password: this.createUser.value.password,
-    //     email_confirm: true,
-    //   });
-    // if (error) return;
-    // await this.employeesService.addEmployee(employee);
+    await this.employeesService.addEmployee((employee ?? '') as unknown as Database['public']['Tables']['Employee']['Insert']);
   }
 
   selectFile(event: any) {
