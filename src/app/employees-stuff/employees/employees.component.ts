@@ -6,6 +6,9 @@ import { Database } from 'src/app/models/supabase';
 import { EmployeeDataService } from '../../services/employees/employee-data.service';
 import { BehaviorSubject, map } from 'rxjs';
 import { OnlineStatusService } from '../../services/online-status.service';
+import { Router } from '@angular/router';
+import { EmployeesService } from 'src/app/services/employees/employees.service';
+import { SupabaseService } from 'src/app/services/supabase.service';
 
 @Component({
   selector: 'app-employees',
@@ -13,8 +16,8 @@ import { OnlineStatusService } from '../../services/online-status.service';
   styleUrls: ['./employees.component.scss'],
 })
 export class EmployeesComponent implements OnInit {
-  employees: any;
-  employee: any;
+  loggedUser: any;
+  user: any;
   dataSource$: BehaviorSubject<
     MatTableDataSource<Database['public']['Tables']['Employee']['Row']>
   > = new BehaviorSubject<
@@ -37,10 +40,21 @@ export class EmployeesComponent implements OnInit {
 
   constructor(
     private employeeDataService: EmployeeDataService,
-    public onlineStatusService: OnlineStatusService
+    public onlineStatusService: OnlineStatusService,
+    private router: Router,
+    private employeesService: EmployeesService,
+    private supabaseService: SupabaseService
   ) {}
 
   ngOnInit() {
+    this.supabaseService.getLoggedUser().then((data) => {
+      this.user = data;
+      this.employeesService
+        .getEmployeeByEmail(this.user.user.email)
+        .then((data) => {
+          this.loggedUser = data;
+        });
+    });
     this.employeeDataService.employees$
       .pipe(
         map((employees) => {
@@ -67,6 +81,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   onClickRow(employee: Database['public']['Tables']['Employee']['Row']) {
-    location.href = '/attendance/' + employee.IMEI;
+    this.router.navigateByUrl('/attendance/' + employee.IMEI);
   }
 }
