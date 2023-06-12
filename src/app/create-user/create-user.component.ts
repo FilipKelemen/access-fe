@@ -16,6 +16,7 @@ export class CreateUserComponent implements OnInit {
   hide = true;
   selectedRole: number;
   selectedUser: string;
+  selectedFiles: any;
   roles: Database['public']['Tables']['Role']['Row'][];
   authorizedUsers: Database['public']['Tables']['Employee']['Row'][];
   constructor(
@@ -33,7 +34,7 @@ export class CreateUserComponent implements OnInit {
       CNP: [''],
       photo: [''],
       badge: [''],
-      department: [''],
+      division: [''],
       accessInterval: [''],
       IMEI: [''],
       role: [''],
@@ -51,17 +52,21 @@ export class CreateUserComponent implements OnInit {
   }
 
   async Save() {
-    let employee: Database['public']['Tables']['Employee']['Row'] =
-      this.createUser.value;
-    const { data, error } =
-      await this.supabaseService.supabase.auth.admin.createUser({
-        email: this.createUser.value.email,
-        password: this.createUser.value.password,
-        email_confirm: true,
-      });
-    if (error) return;
-    await this.employeesService.addEmployee(employee);
-    if (error) return;
-    location.href = '';
+    await this.employeesService.savePhoto(this.selectedFiles);
+    // let employee: Database['public']['Tables']['Employee']['Row'] =
+    //   this.createUser.value;
+    // const { data, error } =
+    //   await this.supabaseService.supabase.auth.admin.createUser({
+    //     email: this.createUser.value.email,
+    //     password: this.createUser.value.password,
+    //     email_confirm: true,
+    //   });
+    // if (error) return;
+    // await this.employeesService.addEmployee(employee);
+  }
+
+  selectFile(event: any) {
+    if (event.target === null) return;
+    this.selectedFiles = event.target.files;
   }
 }
