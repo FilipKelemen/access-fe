@@ -3,10 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeAttendanceComponent } from './employee-attendance/employee-attendance.component';
-
+import { AuthGuardService as AuthGuard } from '../services/auth-guard.service';
 const routes: Routes = [
-  { path: 'employees', component: EmployeesComponent },
-  { path: 'attendance/:IMEI', component: EmployeeAttendanceComponent },
+  {
+    path: 'employees',
+    component: EmployeesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'attendance/:IMEI',
+    component: EmployeeAttendanceComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
