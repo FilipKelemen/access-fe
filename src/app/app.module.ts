@@ -26,6 +26,9 @@ import { CreateUserRoutingModule } from './create-user/create-user-routing.modul
 import { LocalDbService } from './services/local-db.service';
 import { OfflinePopUpComponent } from './components/offline-pop-up/offline-pop-up.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { AuthGuardService } from './services/auth-guard.service';
+import { RoleGuardService } from './services/role-guard.service';
 
 @NgModule({
   declarations: [
@@ -57,9 +60,15 @@ import { CreateUserComponent } from './create-user/create-user.component';
     MatToolbarModule,
     CreateUserRoutingModule,
     OfflinePopUpComponent,
+    MatMenuModule,
   ],
   exports: [],
-  providers: [],
+  providers: [
+    { provide: AuthGuardService },
+    AuthGuardService,
+    { provide: RoleGuardService },
+    RoleGuardService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
