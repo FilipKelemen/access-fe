@@ -17,8 +17,13 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {}
 
   logout() {
+    localStorage.clear();
     this.supabaseService.signOut().then(() => {
       this.router.navigateByUrl('/auth');
     });
+  }
+
+  create() {
+    this.router.navigateByUrl('/create');
   }
 }

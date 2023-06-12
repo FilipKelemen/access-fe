@@ -1,27 +1,18 @@
-<mat-toolbar>
-  <div class="brand">
-    <img
-      src="./././assets/images/logo_preview_rev_1.jpg"
-      alt="logo"
-      style="
-        display: inline-flex;
-        max-height: fit-content;
-        max-width: 100px;
-        object-fit: cover;
-      "
-    />
-  </div>
+<mat-toolbar style="margin-bottom: 10px">
+  <img
+    src="./././assets/images/logo_preview_rev_1.jpg"
+    alt="logo"
+    style="
+      display: inline-flex;
+      max-height: fit-content;
+      max-width: 100px;
+      object-fit: cover;
+    "
+  />
   <div style="display: flex; flex-direction: column">
     <strong style="color: black; padding: 0px"> Accessify </strong>
     <p style="color: black; font-size: 15px; padding: 0px">V 1.0.0</p>
   </div>
-  <a
-    class="link"
-    routerLink=""
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
-    >Home</a
-  >
   <a
     class="link"
     routerLink="/employees"
@@ -29,32 +20,13 @@
     [routerLinkActiveOptions]="{ exact: true }"
     >Employees</a
   >
-  <div class="menu d-none d-lg-block text-white justify-content-end">
-    <div class="dropdown">
-      <button
-        mat-stroked-button
-        class="dropdown-toggle"
-        type="button"
-        id="dropdownMenuUser"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <i class="fa fa-user-o"></i>{{ loggedUser | fullname }}
-      </button>
-      <div
-        class="dropdown-menu dropdown-menu-right"
-        aria-labelledBy="dropdownMenuUser"
-      >
-        <button
-          id="dropdownLogoutButton"
-          class="dropdown-item"
-          type="button"
-          (click)="logout()"
-        >
-          Logout
-        </button>
-      </div>
-    </div>
+  <div class="buttons">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item type="button" (click)="logout()">Logout</button>
+      <button mat-menu-item type="button" (click)="create()">Create</button>
+    </mat-menu>
   </div>
 </mat-toolbar>
