@@ -7,7 +7,7 @@ import {
   SupabaseClient,
 } from '@supabase/supabase-js';
 import { environment } from 'src/environments/environment';
-import {Database} from '../models/supabase'
+import { Database } from '../models/supabase';
 
 @Injectable({
   providedIn: 'root',
@@ -23,11 +23,6 @@ export class SupabaseService {
     );
   }
 
-  async get(tableName: string) {
-    const { data, error } = await this.supabase.from(tableName).select();
-    return { data, error };
-  }
-
   get session() {
     this.supabase.auth.getSession().then(({ data }) => {
       this._session = data.session;
@@ -36,11 +31,8 @@ export class SupabaseService {
   }
 
   async getLoggedUser() {
-    const { data, error } = await this.supabase
-      .from('Employee')
-      .select()
-      .eq('CNP', JSON.parse(localStorage.getItem('user')!).CNP);
-    if (error) return error;
+    const { data, error } = await this.supabase.auth.getUser();
+    if (error) throw error;
     return data;
   }
 
@@ -48,6 +40,13 @@ export class SupabaseService {
     callback: (event: AuthChangeEvent, session: Session | null) => void
   ) {
     return this.supabase.auth.onAuthStateChange(callback);
+  }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('sb-oqphhgyulecsgphlwjqr-auth-token');
+    if (token === null || JSON.parse(token).expires_at > new Date().getTime())
+      return false;
+    return true;
   }
 
   signIn(email: string, password: string) {

@@ -12,7 +12,7 @@ export class AttendanceService {
       .from('Access')
       .select('*')
       .eq('IMEI', IMEI);
-    if (error) return error;
+    if (error) throw error;
     return Attendance;
   }
 }

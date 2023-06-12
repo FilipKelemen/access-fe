@@ -29,7 +29,16 @@ export class EmployeesService implements AbstractEmployeeService {
       .from('Employee')
       .select('*')
       .eq('IMEI', IMEI);
-    if (error) return error;
+    if (error) throw error;
+    return Employee;
+  }
+
+  async getEmployeeByEmail(email: string) {
+    let { data: Employee, error } = await this.supabaseService.supabase
+      .from('Employee')
+      .select('*')
+      .eq('email', email);
+    if (error) throw error;
     return Employee;
   }
 
@@ -48,7 +57,7 @@ export class EmployeesService implements AbstractEmployeeService {
       .select('*')
       .eq('createdByAuthorizedUser', email)
       .range(0, 9);
-    if (error) return error;
+    if (error) throw error;
     return Employee;
   }
 
@@ -59,6 +68,7 @@ export class EmployeesService implements AbstractEmployeeService {
       .from('Employee')
       .insert([employeeData]);
     if (error) throw error;
+    return true;
   }
 
   async updateEmployee(
@@ -77,5 +87,22 @@ export class EmployeesService implements AbstractEmployeeService {
       .delete()
       .eq('IMEI', IMEI);
     if (error) throw error;
+  }
+
+  async savePhoto(photoFile: any) {
+    const { error } = await this.supabaseService.supabase.storage
+      .from('photos')
+      .upload(photoFile[0].name, photoFile.content!.buffer, {
+        cacheControl: '3600',
+        contentType: photoFile[0].contentType,
+        upsert: false,
+      });
+    if (error) throw error;
+  }
+
+  isAdmin(employee: Database['public']['Tables']['Employee']['Row']): boolean {
+    if (this.supabaseService.isAuthenticated() && employee.role === 1)
+      return true;
+    return false;
   }
 }

@@ -26,12 +26,10 @@ export class EmployeeAttendanceComponent implements OnInit {
     const IMEI = this.route.snapshot.paramMap.get('IMEI');
     if (!IMEI) return;
     this.employeesService.getEmployee(IMEI).then((data) => {
-      if (isPostgressError(data)) throw data;
       this.employees = data || [];
     });
 
     this.attendanceService.getAttendance(IMEI).then((data) => {
-      if (isPostgressError(data)) throw data;
       this.dataSource.data = data || [];
     });
   }

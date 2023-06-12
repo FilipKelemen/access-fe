@@ -43,6 +43,6 @@ export class AuthComponent implements OnInit {
     this.supabaseService
       .getLoggedUser()
       .then((data) => (this.loggedUser = data));
-    location.href = '';
+    this.router.navigateByUrl('/employees');
   }
 }
