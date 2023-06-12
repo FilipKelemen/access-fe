@@ -77,8 +77,9 @@ export class EmployeesComponent implements OnInit {
 
     if (dataSource.paginator) {
       dataSource.paginator.firstPage();
-    if (dataSource.paginator) {
-      dataSource.paginator.firstPage();
+      if (dataSource.paginator) {
+        dataSource.paginator.firstPage();
+      }
     }
   }
 
