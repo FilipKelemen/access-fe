@@ -44,7 +44,8 @@ export class EmployeesComponent implements OnInit {
     private router: Router,
     private employeesService: EmployeesService,
     private supabaseService: SupabaseService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.supabaseService.getLoggedUser().then((data) => {

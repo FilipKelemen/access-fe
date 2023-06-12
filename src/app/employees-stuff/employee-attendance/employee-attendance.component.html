@@ -1,5 +1,7 @@
 <div class="mx-4">
-  <h1>Prezenta angajatului {{ employees[0] | fullname }}</h1>
+  <ng-container *ngIf="employees">
+    <h1>Prezenta angajatului {{ employees[0] | fullname }}</h1>
+  </ng-container>
   <mat-form-field class="filter">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" #input />
