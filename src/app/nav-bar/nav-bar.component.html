@@ -13,14 +13,8 @@
     <strong style="color: black; padding: 0px"> Accessify </strong>
     <p style="color: black; font-size: 15px; padding: 0px">V 1.0.0</p>
   </div>
-  <a
-    class="link"
-    routerLink="/employees"
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
-    >Employees</a
-  >
-  <div class="buttons">
+  <a *ngIf="user" class="link" href="/employees">Employees</a>
+  <div class="buttons" *ngIf="user">
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
       <mat-icon>menu</mat-icon>
     </button>

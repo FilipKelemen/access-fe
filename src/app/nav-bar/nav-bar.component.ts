@@ -9,17 +9,19 @@ import { Database } from '../models/supabase';
   styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
-  loggedUser: Database['public']['Tables']['Employee']['Row'];
+  user: any;
   constructor(
     private router: Router,
     private supabaseService: SupabaseService
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.supabaseService.getLoggedUser().then((data) => (this.user = data));
+  }
 
   logout() {
     localStorage.clear();
     this.supabaseService.signOut().then(() => {
-      this.router.navigateByUrl('/auth');
+      location.href = '/auth';
     });
   }
 
