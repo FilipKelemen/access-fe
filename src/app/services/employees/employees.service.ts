@@ -46,7 +46,7 @@ export class EmployeesService implements AbstractEmployeeService {
     let { data: Employee, error } = await this.supabaseService.supabase
       .from('Employee')
       .select('*')
-      .eq('role', 2);
+      .neq('role', 3);
     if (error) throw error;
     return Employee;
   }
@@ -97,7 +97,6 @@ export class EmployeesService implements AbstractEmployeeService {
         contentType: photoFile[0].type,
         upsert: false,
       });
-    if (error) throw error;
   }
 
   isAdmin(employee: Database['public']['Tables']['Employee']['Row']): boolean {
