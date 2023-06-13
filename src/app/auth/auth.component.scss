@@ -1,15 +1,34 @@
+.login {
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: block;
+  font-weight: bold;
+  font-size: x-large;
+}
+
+h2 {
+  color: #f6ffde;
+}
+
 mat-card {
+  margin-bottom: 150px;
   width: 100%;
   height: 100%;
   max-width: 400px;
   max-height: 300px;
-  text-align: center;
-  background-color: cadetblue;
-  font-family: "Times New Roman", Times, serif;
+  display: flex;
+  justify-content: center;
+  align-items: space-between;
+  flex-direction: column;
+  gap: 35px;
+  background: #c9dbb2;
+  box-shadow: 16px 16px 32px #c8c8c8, -16px -16px 32px #fefefe;
+  border-radius: 8px;
 }
 
 .card-wrapper {
-  background-color: cyan;
+  background-color: #e3f2c1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,11 +40,32 @@ mat-form-field {
   display: flex;
 }
 
-.title {
+.title-container {
   display: flex;
   justify-content: center;
+  background-color: #e3f2c1;
+}
+
+.title {
+  margin-top: 60px;
+  justify-content: center;
   align-items: center;
-  background-color: cyan;
-  color: cadetblue;
-  font-family: "Times New Roman", Times, serif;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 3s steps(70) forwards;
+  font-family: "Courier";
+  font-size: 30px;
+  color: #aac8a7;
+  display: flex;
+  background-color: #e3f2c1;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
 }
