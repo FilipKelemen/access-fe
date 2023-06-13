@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import { SupabaseService } from '../services/supabase.service';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Database } from '../models/supabase';
 import { isPostgressError } from '../models/utils';
 import { RoleService } from '../services/role.service';
@@ -8,7 +7,7 @@ import { EmployeesService } from '../services/employees/employees.service';
 
 const defaultValues = {
   email: new FormControl(''),
-  password: new FormControl(''),
+  // password: new FormControl(''),
   firstName: new FormControl(''),
   lastName: new FormControl(''),
   CNP: new FormControl(''),
@@ -19,7 +18,7 @@ const defaultValues = {
   IMEI: new FormControl(''),
   role: new FormControl(''),
   createdByAuthorisedUser: new FormControl(''),
-} as const
+};
 
 @Component({
   selector: 'app-create-user',
@@ -35,8 +34,6 @@ export class CreateUserComponent implements OnInit {
   roles: Database['public']['Tables']['Role']['Row'][];
   authorizedUsers: Database['public']['Tables']['Employee']['Row'][];
   constructor(
-    private formBuilder: FormBuilder,
-    private supabaseService: SupabaseService,
     private employeesService: EmployeesService,
     private roleService: RoleService
   ) {}
@@ -54,16 +51,22 @@ export class CreateUserComponent implements OnInit {
   }
 
   async Save() {
-    let employee =
-      this.createUser.value;
-    const { data, error } =
-      await this.supabaseService.supabase.auth.admin.createUser({
-        email: this.createUser.value.email ?? '',
-        email_confirm: true,
-      });
-    if (error) return;
+    this.createUser.value.photo =
+      'https://oqphhgyulecsgphlwjqr.supabase.co/storage/v1/object/public/photos/' +
+      this.selectedFiles[0].name;
+    let employee = this.createUser.value;
+    // const { data, error } =
+    //   await this.supabaseService.supabase.auth.admin.createUser({
+    //     email: this.createUser.value.email ?? '',
+    //     email_confirm: true,
+    //   });
+    // if (error) return;
     await this.employeesService.savePhoto(this.selectedFiles);
-    await this.employeesService.addEmployee((employee ?? '') as unknown as Database['public']['Tables']['Employee']['Insert']);
+    await this.employeesService.addEmployee(
+      (employee ??
+        '') as unknown as Database['public']['Tables']['Employee']['Insert']
+    );
+    location.href = '';
   }
 
   selectFile(event: any) {
