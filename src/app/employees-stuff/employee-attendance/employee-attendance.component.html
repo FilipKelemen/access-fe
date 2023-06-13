@@ -6,7 +6,15 @@
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" #input />
   </mat-form-field>
-
+  <div
+    class="d-flex"
+    style="justify-content: space-between; margin-bottom: 10px"
+  >
+    <button mat-raised-button color="primary" (click)="addEntry()">
+      Add Entry
+    </button>
+    <button mat-raised-button color="warn" (click)="addExit()">Add Exit</button>
+  </div>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="IMEI">
@@ -33,6 +41,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     </table>
     <mat-paginator
+      [length]="this.dataSource.data.length"
       [pageSizeOptions]="[10, 20, 30, 100]"
       aria-label="Select page of attendance record"
     ></mat-paginator>

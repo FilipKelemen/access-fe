@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Database } from 'src/app/models/supabase';
-import { isPostgressError } from 'src/app/models/utils';
 import { AttendanceService } from 'src/app/services/attendance.service';
 import { EmployeesService } from 'src/app/services/employees/employees.service';
 
@@ -17,19 +16,20 @@ export class EmployeeAttendanceComponent implements OnInit {
     Database['public']['Tables']['Access']['Row']
   > = new MatTableDataSource<Database['public']['Tables']['Access']['Row']>();
   displayedColumns = ['IMEI', 'type', 'created_at'];
+  access: Database['public']['Tables']['Access']['Insert'];
+  IMEI = this.route.snapshot.paramMap.get('IMEI');
   constructor(
     private employeesService: EmployeesService,
     private route: ActivatedRoute,
     private attendanceService: AttendanceService
   ) {}
   ngOnInit(): void {
-    const IMEI = this.route.snapshot.paramMap.get('IMEI');
-    if (!IMEI) return;
-    this.employeesService.getEmployee(IMEI).then((data) => {
+    if (!this.IMEI) return;
+    this.employeesService.getEmployee(this.IMEI).then((data) => {
       this.employees = data || [];
     });
 
-    this.attendanceService.getAttendance(IMEI).then((data) => {
+    this.attendanceService.getAttendance(this.IMEI).then((data) => {
       this.dataSource.data = data || [];
     });
   }
@@ -41,5 +41,15 @@ export class EmployeeAttendanceComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  addEntry() {
+    this.access = { IMEI: this.IMEI, type: true };
+    this.attendanceService.addAttendance(this.access);
+  }
+
+  addExit() {
+    this.access = { IMEI: this.IMEI, type: false };
+    this.attendanceService.addAttendance(this.access);
   }
 }

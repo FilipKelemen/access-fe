@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
+import { Database } from '../models/supabase';
 
 @Injectable({
   providedIn: 'root',
@@ -14,5 +15,15 @@ export class AttendanceService {
       .eq('IMEI', IMEI);
     if (error) throw error;
     return Attendance;
+  }
+
+  async addAttendance(
+    attendance: Database['public']['Tables']['Access']['Insert']
+  ) {
+    const { error } = await this.supabaseService.supabase
+      .from('Access')
+      .insert([attendance]);
+    if (error) throw error;
+    return true;
   }
 }
